@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Solution {
+    static LinkedListNode sortList(LinkedListNode head){
+        // Write your code here
+        if(head==null){
+            return null;
+        }
+        LinkedListNode evenHead=new LinkedListNode(100);
+        LinkedListNode oddHead=new LinkedListNode(100);
+        LinkedListNode evenTail=evenHead;
+        LinkedListNode oddTail=oddHead;
+        LinkedListNode current=head;
+        while(current!=null)
+        {
+            if(current.data%2==0){
+                evenTail.next=current;
+                evenTail=evenTail.next;
+            }
+            else{
+                oddTail.next=current;
+                oddTail=oddTail.next;
+            }
+            current=current.next;
+        }
+        evenTail.next=null;
+        oddTail.next=null;
+        evenTail.next=oddHead.next;
+        return evenHead.next;
+    }
+}
+
+class LinkedListNode  {
+    int data;
+    LinkedListNode next;
+
+    public LinkedListNode(int data)  {
+        this.data = data;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Throwable {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        LinkedListNode head = new LinkedListNode(sc.nextInt());
+        LinkedListNode a = head;
+        for(int i=1;i<n;i++) {
+            LinkedListNode temp = new LinkedListNode(sc.nextInt());
+            a.next = temp;
+            a = temp;
+        }
+        LinkedListNode ans = Solution.sortList(head);
+        for(int i=0;i<n;i++) {
+            if(i == n-1) {
+                System.out.println(ans.data);
+            }
+            else {
+                System.out.print(ans.data + " ");
+            }
+            ans = ans.next;
+        }
+    }
+}
